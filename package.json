@@ -1,6 +1,6 @@
 {
   "name": "@juego/njs2-cli2",
-  "version": "1.0.23",
+  "version": "1.0.26",
   "description": "",
   "main": "index.js",
   "bin": {

@@ -1,7 +1,6 @@
 module.exports = {
-    command: 'run',
-    argument: '[<choices:serverless,express,nodemon>]',
-    description: `For example:
+    command: 'run [<choices:serverless,express,nodemon>]',
+    description: `
     njs2 run
     njs2 run serverless
     njs2 run express

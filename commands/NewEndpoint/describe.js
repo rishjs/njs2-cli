@@ -1,7 +1,6 @@
 module.exports = {
-    command: 'endpoint',
-    argument: '<endpoint-name>',
-    description: `For example:
+    command: 'endpoint <endpoint-name>',
+    description: `
     njs2 endpoint user.getDetails`,
     summary: 'Create a new Endpoint',
     usage: '<endpoint-name>'
