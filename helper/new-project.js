@@ -5,22 +5,16 @@ const path = require('path');
 const { checkAndFindVersion } = require('./utils');
 const colors = require("colors");
 
-const execute = async (CLI_KEYS, CLI_ARGS) => {
+const execute = async (argv) => {
   try {
-    const PROJECT_NAME = CLI_ARGS[0];
+    const PROJECT_NAME = argv.project_name;
     let BASE_VERSION = "latest"
-    // Validations
-    if (!PROJECT_NAME) {
-      
-      throw new Error('Project name is mandatory parameter'.red);
-    }
-
     if (fs.existsSync(PROJECT_NAME)) {
       throw new Error(`Project folder already exists: ${PROJECT_NAME}`.red);
     }
 
-    if (checkAndFindVersion(CLI_ARGS)) {
-      BASE_VERSION = checkAndFindVersion(CLI_ARGS)
+    if (checkAndFindVersion(argv)) {
+      BASE_VERSION = checkAndFindVersion(argv)
     } else {
       console.log("Defaulting to @njs2/base@latest".bold)
       console.log("Did you know now you can pass version to njs2 project command? e.g.: njs2 project <project-name> version 2.0.1".bold)

@@ -9,28 +9,22 @@ const allCommands = requireDir("./commands", {
 })
 
 Object.values(allCommands)
-	.reduce((all, commandData) => {
-		const {describe: {command,description,summary,usage}, index: response} = commandData;
-		return program.command(command)
-        .description("For Example:"+description.yellow)
+	.filter((commandData) => {
+		const {describe: {command,description, arguments,summary,usage}, index: response} = commandData;
+        const p=program.command(command)
+        .description(description.yellow)
         .summary(summary)
         .usage(usage)
         .showHelpAfterError('(add --help or -h for additional information)')
-        .action(response)
-	},process.argv)
+        .action(response);
+        addArgs(p,arguments);
+	})
 
-    program.addHelpText('after',"Example call:"+` 
-  njs2 project <project-name> [version] [version-number] 
-  njs2 endpoint <endpoint-name>
-  njs2 run
-  njs2 run serverless
-  njs2 run express
-  njs2 run nodemon
-  njs2 plugin <plugin-name>
-  njs2 plugin uninstall <plugin-name>
-  njs2 plugin compile
-  njs2 plugin install [<plugin-name>]
-  njs2 library <folder-name> <filename> <options : [sql,mongo]>
-  njs2 upgrade [version] [version-number]`.yellow)
-  .showHelpAfterError()
-  .parse();
+program.showHelpAfterError()
+        .parse();
+
+function addArgs(prg, args) {
+    for(let arg of args) {
+        prg.argument(arg)
+    }                                                                  
+  }

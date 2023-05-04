@@ -1,4 +1,8 @@
-module.exports =function (options) {
-    require("../../helper/new-project").execute(options,this.args);
-  console.log(this.args);
+module.exports =function (projectname,version,versionnumber,options) {
+  const argv={
+    "project_name":projectname,
+    "version":version,
+    "version_number":versionnumber
+  }
+  require("../../helper/new-project").execute(argv);
 }
