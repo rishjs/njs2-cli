@@ -31,6 +31,7 @@ const execute = async (argv) => {
     packageJson['dependencies'] = dependencies;
     fs.writeFileSync(`${path.resolve(process.cwd(), `${PROJECT_NAME}/package.json`)}`, JSON.stringify(packageJson, null, 2));
     child_process.execSync(`cd ${PROJECT_NAME} && npm i`, { stdio: 'inherit' });
+    
   } catch (e) {
     console.error(colors.red(e));
   }

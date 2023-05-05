@@ -122,5 +122,4 @@ module.exports.updateSrcFiles = async (folderName) => {
   if (pluginPackageJson['loadEnv']) {
     await require('./init-env').initEnv(folderName);
   }
-
 }
