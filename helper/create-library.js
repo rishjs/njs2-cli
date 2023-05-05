@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const colors = require("colors");
 
-const execute = async (CLI_KEYS, CLI_ARGS) => {
+const execute = async (argv) => {
   try {
     if (!fs.existsSync(`${path.resolve(process.cwd(), `package.json`)}`))
       throw new Error(
@@ -21,23 +21,23 @@ const execute = async (CLI_KEYS, CLI_ARGS) => {
       );
     }
 
-    let splitString = CLI_ARGS[0].split("/");
+    let splitString = argv.foldername.split("/");
 
     let COPY_TEMP_SCRIPT = "";
-    const LIB_NAME = CLI_ARGS[0];
+    const LIB_NAME = argv.foldername;
     const LIB_PATH = `src/library/${LIB_NAME}`;
     if (!fs.existsSync(LIB_PATH)) {
       fs.mkdirSync(LIB_PATH);
     }
-    const LIB_FILE_NAME = CLI_ARGS[1];
+    const LIB_FILE_NAME = argv.filename;
     const LIB_FILE_PATH = `src/library/${LIB_NAME}/${LIB_FILE_NAME}.lib.js`;
     if (fs.existsSync(LIB_FILE_PATH)) {
       throw new Error(`library file name  already exists: ${LIB_FILE_PATH}`.red);
     }
 
-    CLI_ARGS[2] = CLI_ARGS[2] == undefined ? "default" : CLI_ARGS[2];
+    argv.choices = argv.choices == undefined ? "default" : argv.choices;
 
-    if (CLI_ARGS[2] === "sql") {
+    if (argv.choices === "sql") {
       COPY_TEMP_SCRIPT = `cp -rn "${path.resolve(
         process.cwd(),
         "."
@@ -45,7 +45,7 @@ const execute = async (CLI_KEYS, CLI_ARGS) => {
         process.cwd(),
         "."
       )}/${LIB_PATH}"`;
-    } else if (CLI_ARGS[2] === "mongo") {
+    } else if (argv.choices === "mongo") {
       COPY_TEMP_SCRIPT = `cp -rn "${path.resolve(
         process.cwd(),
         "."
@@ -68,11 +68,11 @@ const execute = async (CLI_KEYS, CLI_ARGS) => {
     fs.renameSync(
       `${path.resolve(
         process.cwd(),
-        `src/library/` + CLI_ARGS[0] + `/` + CLI_ARGS[2] + `.lib.js`
+        `src/library/` + argv.foldername + `/` + argv.choices + `.lib.js`
       )}`,
       `${path.resolve(
         process.cwd(),
-        `src/library/` + CLI_ARGS[0] + `/` + LIB_FILE_NAME + ".lib.js"
+        `src/library/` + argv.foldername + `/` + LIB_FILE_NAME + ".lib.js"
       )}`
     );
 
@@ -95,20 +95,20 @@ const execute = async (CLI_KEYS, CLI_ARGS) => {
       executeFileContents
     );
     console.log('\x1b[32m',`Sucessfully created ${LIB_PATH}/${LIB_FILE_NAME}.lib.js`.green);
-    if(CLI_ARGS[2] === "mongo"){
+    if(argv.choices === "mongo"){
       fs.renameSync(
         `${path.resolve(
           process.cwd(),
-          `src/library/`+ CLI_ARGS[0] + `/`+`model/model.js`
+          `src/library/`+ argv.foldername + `/`+`model/model.js`
         )}`,
         `${path.resolve(
           process.cwd(),
-          `src/library/`+ CLI_ARGS[0] + `/`+`model/` + LIB_FILE_NAME + ".js"
+          `src/library/`+ argv.foldername + `/`+`model/` + LIB_FILE_NAME + ".js"
         )}`
       );
 
       executeFileContents = fs.readFileSync(
-        path.resolve(process.cwd(), `src/library/`+ CLI_ARGS[0] + `/`+`model/` + LIB_FILE_NAME + ".js"),
+        path.resolve(process.cwd(), `src/library/`+ argv.foldername + `/`+`model/` + LIB_FILE_NAME + ".js"),
         "utf8"
       );
       executeFileContents = executeFileContents
@@ -122,10 +122,10 @@ const execute = async (CLI_KEYS, CLI_ARGS) => {
       );
 
       fs.writeFileSync(
-        path.resolve(process.cwd(), `src/library/`+ CLI_ARGS[0] + `/`+`model/` + LIB_FILE_NAME + ".js"),
+        path.resolve(process.cwd(), `src/library/`+ argv.foldername + `/`+`model/` + LIB_FILE_NAME + ".js"),
         executeFileContents
       );
-      console.log('\x1b[32m',`Sucessfully created src/library/`+ CLI_ARGS[0] + `/`+`model/` + LIB_FILE_NAME + ".js".green);
+      console.log('\x1b[32m',`Sucessfully created src/library/`+ argv.foldername + `/`+`model/` + LIB_FILE_NAME + ".js".green);
     }
   } catch (e) {
     console.log(colors.red('\x1b[31m',e));

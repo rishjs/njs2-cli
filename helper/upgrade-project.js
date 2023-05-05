@@ -5,7 +5,7 @@ const path = require('path');
 const { checkAndFindVersion } = require('./utils');
 const colors = require("colors");
 
-const execute = async (CLI_KEYS, CLI_ARGS) => {
+const execute = async (argv) => {
     try {
 
         if (!fs.existsSync(`${path.resolve(process.cwd(), `package.json`)}`))
@@ -17,8 +17,8 @@ const execute = async (CLI_KEYS, CLI_ARGS) => {
         }
 
         let REQUESTED_BASE_VERSION = "latest"
-        if (checkAndFindVersion(CLI_ARGS)) {
-            REQUESTED_BASE_VERSION = checkAndFindVersion(CLI_ARGS)
+        if (checkAndFindVersion(argv)) {
+            REQUESTED_BASE_VERSION = checkAndFindVersion(argv)
         }
 
         child_process.execSync(`npm uninstall @njs2/base`, { stdio: 'inherit' });

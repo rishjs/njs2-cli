@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const colors = require("colors");
 
-const execute = async (CLI_KEYS, CLI_ARGS) => {
+const execute = async (endpoint) => {
   try {
     if (!fs.existsSync(`${path.resolve(process.cwd(), `package.json`)}`))
       throw new Error('njs2 endpoint <endpoint-name> to be run from project root directory'.red);
@@ -14,7 +14,7 @@ const execute = async (CLI_KEYS, CLI_ARGS) => {
       throw new Error('njs2 endpoint <endpoint-name> to be run from project root directory'.red);
     }
 
-    let splitString = CLI_ARGS[0].split("/");
+    let splitString = endpoint.split("/");
     splitString = splitString.map((element, index) => {
       //Checking for index > 1 because if method name is "/user/detail" then second resource(detail) should
       //get converted to Pascal case "user" should be camel case

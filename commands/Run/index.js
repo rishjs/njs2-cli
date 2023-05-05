@@ -1,3 +1,3 @@
-module.exports =function(options) {
-    require("../../helper/run").execute(options,this.args);
+module.exports =function(choices) {
+    require("../../helper/run").execute(choices);
   }

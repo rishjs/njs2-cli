@@ -10,7 +10,7 @@ const allCommands = requireDir("./commands", {
 
 Object.values(allCommands)
 	.filter((commandData) => {
-		const {describe: {command,description, arguments,summary,usage}, index: response} = commandData;
+		const {describe: {command,description,arguments,summary,usage}, index: response} = commandData;
         const p=program.command(command)
         .description(description.yellow)
         .summary(summary)
@@ -21,10 +21,10 @@ Object.values(allCommands)
 	})
 
 program.showHelpAfterError()
-        .parse();
+       .parse();
 
 function addArgs(prg, args) {
     for(let arg of args) {
         prg.argument(arg)
-    }                                                                  
+    }
   }

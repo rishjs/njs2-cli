@@ -7,7 +7,7 @@ const colors = require("colors");
 
 const execute = async (argv) => {
   try {
-    const PROJECT_NAME = argv.project_name;
+    const PROJECT_NAME = argv.projectname;
     let BASE_VERSION = "latest"
     if (fs.existsSync(PROJECT_NAME)) {
       throw new Error(`Project folder already exists: ${PROJECT_NAME}`.red);
@@ -31,7 +31,7 @@ const execute = async (argv) => {
     packageJson['dependencies'] = dependencies;
     fs.writeFileSync(`${path.resolve(process.cwd(), `${PROJECT_NAME}/package.json`)}`, JSON.stringify(packageJson, null, 2));
     child_process.execSync(`cd ${PROJECT_NAME} && npm i`, { stdio: 'inherit' });
-    
+
   } catch (e) {
     console.error(colors.red(e));
   }

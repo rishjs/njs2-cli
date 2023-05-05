@@ -12,7 +12,7 @@ const colors = require("colors");
  * njs2 run nodemon
  * njs2 run -- will fallback to express
  */
-const execute = async (CLI_KEYS, CLI_ARGS) => {
+const execute = async (choices) => {
   // Validation to run from project folder
   if (!fs.existsSync(`${path.resolve(process.cwd(), `package.json`)}`))
     throw new Error('Run from project root direcory: njs2 run'.red);
@@ -28,7 +28,7 @@ const execute = async (CLI_KEYS, CLI_ARGS) => {
   // Runs the lint proccess for syntax validations
   child_process.execSync('npm run lint', { stdio: 'inherit' });
 
-  switch (CLI_ARGS[0]) {
+  switch (choices) {
     case 'serverless':
       child_process.execSync('sls offline start --noPrependStageInUrl', { stdio: 'inherit' });
       break;

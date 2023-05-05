@@ -1,4 +1,3 @@
-module.exports =function(options)  {
-    //execute;
-    require("../../helper/create-endpoint").execute(options,this.args);
+module.exports =function(endpoint)  {
+    require("../../helper/create-endpoint").execute(endpoint);
   }

@@ -66,7 +66,7 @@ module.exports.validatePackageVersion = (val) => {
 }
 
 module.exports.checkAndFindVersion = (argv) => {
-  return argv.version? argv.version_number?? false : false;
+  return argv.version? argv.versionnumber?? false : false;
 }
 
 module.exports.updateNodeModulesStructure = async (pluginName) => {
